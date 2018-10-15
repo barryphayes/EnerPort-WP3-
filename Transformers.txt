@@ -1,0 +1,15 @@
+!New Transformer.TR1 Buses=[SourceBus 1] Conns=[Delta Wye] kVs=[11 0.416] kVAs=[800 800] XHL=4 sub=y
+
+new Transformer.TR1 phases=3  windings=2  buses=(Sourcebus2, A)  conns=(wye, wye)  kvs=(33, 11)  kvas=(30000,30000) %loadloss=0 xhl=12.5 sub=y
+
+!new regcontrol.TR1 transformer=TR1 winding=2 tapwinding=2 vreg=(100) ptratio=(11000 3 sqrt / 100 /) band=1
+
+
+New Transformer.TR2 Buses=[B 1] Conns=[Delta Wye] kVs=[11 0.416] kVAs=[800 800] XHL=4 sub=y
+
+  !! Attempt at 3 single-phase transformers
+!New Transformer.TR2a phases=1 Buses=[B.1 1.1] Conns=[Delta Wye] kVs=[11 0.416] kVAs=[800 800] XHL=4 sub=y
+!New Transformer.TR2b phases=1 Buses=[B.2 1.2] Conns=[Delta Wye] kVs=[11 0.416] kVAs=[800 800] XHL=4 sub=y
+!New Transformer.TR2c phases=1 Buses=[B.3 1.3] Conns=[Delta Wye] kVs=[11 0.416] kVAs=[800 800] XHL=4 sub=y
+
+

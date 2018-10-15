@@ -1,0 +1,82 @@
+clear
+Set DefaultBaseFrequency=50  ! for European system
+set datapath=C:\OpenDSS\Matlab_IEEEtestEU
+
+New circuit.LVTest
+
+Edit Vsource.Source BasekV=33 pu=1.0 ISC3=3000  ISC1=5 phases=3
+!Edit Vsource.Source BasekV=33 pu=1.06  ISC3=3000  ISC1=5 phases=3
+
+Redirect LineCode.txt
+Redirect LoadShapes_EnerPort_adj.txt
+batchedit loadshape..* useactual=no
+Redirect Lines.txt
+Redirect Transformers.txt
+Redirect PV_100.txt
+Redirect EV_100.txt
+Redirect Loads.txt
+!Redirect Loads_resZIP.txt
+Redirect Monitors.txt
+
+New energymeter.mline1 element=LINE.LINE1 terminal=2
+New energymeter.mline905 element=LINE.LINE905 terminal=2
+!! Add energy meter at GSP
+New energymeter.GSP element=transformer.TR1 terminal=1
+new monitor.TR1 element=transformer.TR1 terminal=1 mode=1 ppolar=no !active and reactive power
+new monitor.Vbb element=transformer.TR2 terminal=2 mode=0 !voltages and currents
+new monitor.Tap element=transformer.TR2 terminal=2 mode=2 !tap positions in pu
+
+!new monitor.Tap element=transformer.TR1 terminal=2 mode=2 !tap positions in pu
+
+!new regcontrol.TR2 transformer=TR2 winding=2 tapwinding=2 bus=905.2 vreg=(100) ptratio=(416 3 sqrt / 100 /) band=2 !delay=3600 tapdelay=3600 debugtrace=yes eventlog=yes
+!new regcontrol.TR2 transformer=TR2 winding=2 tapwinding=2 vreg=(100) ptratio=(416 3 sqrt / 100 /) band=2 !delay=3600 tapdelay=3600 debugtrace=yes eventlog=yes
+
+!new regcontrol.TR1 transformer=TR1 winding=2 tapwinding=2 bus=905.2 vreg=(100) ptratio=(416 3 sqrt / 100 /) band=2 !delay=3600 tapdelay=3600 debugtrace=yes eventlog=yes
+!new regcontrol.TR1 transformer=TR1 winding=2 tapwinding=2 vreg=(106) ptratio=(11000 100 /) band=2 !delay=3600 tapdelay=3600 debugtrace=yes eventlog=yes
+
+new monitor.LineA-B_A element=line.lineA-B terminal=1 mode=1 ppolar=no !active and reactive power
+new monitor.LineA-B_B element=line.lineA-B terminal=2 mode=1 ppolar=no !active and reactive power
+!new monitor.V905 element=LINE.LINE905 terminal=2 mode=0 !voltages and currents
+!new monitor.V880 element=LINE.LINE880 terminal=2 mode=0 !voltages and currents
+
+Set voltagebases=[33 11 .416]
+Calcvoltagebases
+
+buscoords buscoords.txt
+
+!set mode=yearly number=1440 stepsize=1m    ! one day simulation 
+
+! Set "DemandInterval" to true so that energy quantities recorded by energy meters are recorded for 
+! each time step and set "casename" to define a directory under default directory in which all of the 
+! demand interval data is recorded.  (NOTE: Setting Demand=true resets all energymeters.)
+
+!Set overloadreport=true  ! TURN OVERLOAD REPORT ON
+!Set voltexcept=true      ! voltage exception report
+!set demand=true          ! demand interval ON
+!set DIVerbose=true       ! verbose mode is ON
+
+!Set Year=1        ! This statement resets all meters
+!solve 
+
+!closedi     ! close demand interval files at end of run
+
+//=======================================
+/*
+
+!Show mon Tap
+!Show mon LINE558_VI_vs_Time 
+!Show mon LINE825_VI_vs_Time 
+!plot circuit Power Max=30 dots=y labels=n subs=y C1=$00FF0000
+
+!plot profile ph=all
+
+!show powers kva
+!show generators
+
+!Plot monitor object= Vbb channels=(1 3 5 ) bases=[6350.9 6350.9 6350.9]
+!Plot monitor object= Vbb channels=(1 3 5 ) bases=[240 240 240]
+!Plot monitor object= line558_vi_vs_time channels=(1 3 5 ) bases=[240 240 240]
+!Plot monitor object= line825_vi_vs_time channels=(1 3 5 ) bases=[240 240 240]
+!Plot monitor object= line905_vi_vs_time channels=(1 3 5 ) bases=[240 240 240]
+*/
+C:\Users\0119827s\Desktop\OpenDSS\MV\Simple MV network.dss

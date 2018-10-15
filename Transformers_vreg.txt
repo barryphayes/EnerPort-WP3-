@@ -1,0 +1,5 @@
+New Transformer.TR1 Buses=[SourceBus 1] Conns=[Delta Wye] kVs=[11 0.416] kVAs=[800 800] XHL=4 sub=y
+~ maxtap=1.05 mintap=0.85
+
+  !! substation OLTC (regulator)
+new regcontrol.TR1 transformer=TR1 winding=2 tapwinding=1 vreg=(100) ptratio=(416 3 sqrt / 100 /) band=1
